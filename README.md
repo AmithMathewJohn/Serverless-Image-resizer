@@ -31,3 +31,48 @@ Amazon Web Services (AWS) as part of a 30-Day Cloud Computing Bootcamp.
 - ✅ Pay only when used — extremely cost efficient
 
 ## 🏗️ Architecture
+User Browser (HTTPS)
+↓
+Amazon CloudFront (SSL/TLS)
+↓
+S3 Website Bucket (Frontend)
+↓
+API Gateway → Lambda (Presigned URL Generator)
+↓
+Browser → S3 Input Bucket (Direct Upload)
+↓
+S3 Trigger → Lambda (Image Resizer)
+↓
+S3 Output Bucket (Resized Image)
+↓
+Browser displays resized image ✅
+
+## 📁 Project Structure
+serverless-image-resizer/
+│
+├── README.md
+├── frontend/
+│   └── index.html
+├── lambda/
+│   ├── ImageResizerFunction.py
+│   └── GeneratePresignedURL.py
+└── docs/
+└── architecture.md
+
+## 🚀 How It Works
+1. User opens website via CloudFront HTTPS URL
+2. User selects an image and desired dimensions
+3. Frontend requests a presigned URL from API Gateway
+4. Lambda generates a secure temporary S3 upload URL
+5. Browser uploads image directly to S3 (up to 5GB!)
+6. S3 automatically triggers the Image Resizer Lambda
+7. Lambda resizes the image using Python Pillow
+8. Resized image is saved to the output S3 bucket
+9. Frontend displays the resized image with download option
+
+## 💰 Cost
+This project runs almost entirely within the AWS Free Tier.
+Estimated cost for moderate usage — less than ₹20/month!
+
+## 📅 Duration
+30-Day Cloud Computing Bootcamp — 2026
